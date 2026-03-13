@@ -14,5 +14,38 @@ describe("GameEngine", () => {
   it("should handle null canvas gracefully", () => {
     const engine = new GameEngine(null);
     expect(() => engine.start()).not.toThrow();
+    engine.stop();
+  });
+
+  it("should set running to true after start", () => {
+    const canvas = document.createElement("canvas");
+    const engine = new GameEngine(canvas);
+    engine.start();
+    expect(engine.getState().running).toBe(true);
+    engine.stop();
+  });
+
+  it("should set running to false after stop", () => {
+    const canvas = document.createElement("canvas");
+    const engine = new GameEngine(canvas);
+    engine.start();
+    engine.stop();
+    expect(engine.getState().running).toBe(false);
+  });
+
+  it("should reset score to 0 on start", () => {
+    const canvas = document.createElement("canvas");
+    const engine = new GameEngine(canvas);
+    engine.start();
+    engine.stop();
+    // Score stays at 0 (no collisions occurred)
+    expect(engine.getState().score).toBe(0);
+  });
+
+  it("should return a frozen state snapshot", () => {
+    const canvas = document.createElement("canvas");
+    const engine = new GameEngine(canvas);
+    const state = engine.getState();
+    expect(Object.isFrozen(state)).toBe(true);
   });
 });
