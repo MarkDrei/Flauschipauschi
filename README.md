@@ -15,11 +15,15 @@ A game built with Next.js 15, TypeScript, React, and HTML5 Canvas.
 ## Project Structure
 
 ```
+public/                     # Static assets served at root URL
+├── background.svg          # Fullscreen sky/landscape background
+├── unicorn.svg             # Unicorn sprite (variant 1)
+└── unicorn2.svg            # Unicorn sprite (variant 2, displayed on home page)
 src/
 ├── app/                    # Next.js App Router pages and API routes
 │   ├── api/               # API routes
 │   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Home page
+│   └── page.tsx           # Home page – fullscreen background + unicorn2
 ├── components/            # React components
 ├── game/                  # Game engine and logic
 ├── renderers/            # Canvas rendering utilities
@@ -59,6 +63,14 @@ npm start
 npm test
 npm run test:ui  # Run tests with UI
 ```
+
+## Home Page
+
+`src/app/page.tsx` renders a fullscreen scene:
+- `public/background.svg` is stretched to cover the entire viewport as a background layer.
+- `public/unicorn2.svg` is centered on top of the background at `256×256 px`.
+
+No canvas or JavaScript is needed for this view — it is a pure server component using `<img>` tags and Tailwind CSS (`absolute`, `inset-0`, `object-cover`).
 
 ## Key Features
 

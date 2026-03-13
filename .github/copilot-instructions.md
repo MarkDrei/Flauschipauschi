@@ -34,6 +34,7 @@ npm run lint       # ESLint check (catches unused vars/types)
 
 | Directory | Purpose |
 |-----------|---------|
+| `public/` | Static SVG assets served at root URL (`/background.svg`, `/unicorn.svg`, `/unicorn2.svg`) |
 | `src/app/` | Next.js App Router pages & API routes |
 | `src/app/api/` | Server-side API endpoints |
 | `src/components/` | React components (client/server) |
@@ -42,6 +43,21 @@ npm run lint       # ESLint check (catches unused vars/types)
 | `src/shared/` | Shared types, constants, utilities |
 | `src/styles/` | Global CSS (Tailwind) |
 | `src/__tests__/` | Unit & integration tests |
+
+### Static Assets (`public/`)
+
+| File | Description |
+|------|-------------|
+| `public/background.svg` | Sky/landscape background, `viewBox="0 0 800 600"` |
+| `public/unicorn.svg` | Unicorn sprite variant 1 |
+| `public/unicorn2.svg` | Unicorn sprite variant 2 (`viewBox="0 0 200 200"`), shown on home page |
+
+### Home Page (`src/app/page.tsx`)
+
+Server component (no `"use client"`) that renders a fullscreen scene:
+- `background.svg` fills the entire viewport (`absolute inset-0 w-full h-full object-cover`).
+- `unicorn2.svg` is centered on top of the background at `256×256 px` (`absolute inset-0 m-auto w-64 h-64`).
+- No canvas or JavaScript is used for this view.
 
 ### Key Files
 
