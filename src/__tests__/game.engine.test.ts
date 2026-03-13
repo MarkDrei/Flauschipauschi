@@ -36,10 +36,13 @@ describe("GameEngine", () => {
   it("should reset score to 0 on start", () => {
     const canvas = document.createElement("canvas");
     const engine = new GameEngine(canvas);
+    // Start a first session
     engine.start();
     engine.stop();
-    // Score stays at 0 (no collisions occurred)
+    // Start a second session — score must be reset regardless of prior sessions
+    engine.start();
     expect(engine.getState().score).toBe(0);
+    engine.stop();
   });
 
   it("should return a frozen state snapshot", () => {

@@ -157,7 +157,7 @@ export class GameEngine {
   private update(deltaMs: number): void {
     this.updateUnicorn(deltaMs);
     this.updateClouds(deltaMs);
-    this.updateFood(deltaMs);
+    this.updateFood();
     this.updateParticles(deltaMs);
     this.checkCollisions();
   }
@@ -224,7 +224,7 @@ export class GameEngine {
     }
   }
 
-  private updateFood(deltaMs: number): void {
+  private updateFood(): void {
     const now = Date.now();
     const active = this.foodItems.filter((f) => !f.collected).length;
 
@@ -243,8 +243,6 @@ export class GameEngine {
 
     // Remove already-collected items (after particle burst finished)
     this.foodItems = this.foodItems.filter((f) => !f.collected);
-
-    void deltaMs; // used via Date.now() timing above
   }
 
   private spawnFood(): void {
