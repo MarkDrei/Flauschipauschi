@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#87CEEB"/>
+      <stop offset="100%" stop-color="#E0F6FF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky (Static Background) -->
+  <g id="sky">
+    <rect width="800" height="600" fill="url(#skyGrad)"/>
+  </g>
+
+  <!-- Clouds (Parallax Layer 1: Slowest) -->
+  <g id="clouds" transform="translate(0, -50) scale(1.3)">
+    <path d="M 100 150 Q 120 120 150 150 Q 180 140 200 160 Q 220 180 180 190 L 100 190 Q 70 180 100 150 Z" fill="#ffffff" opacity="0.8"/>
+    <path d="M 500 100 Q 520 70 550 100 Q 580 90 600 110 Q 620 130 580 140 L 500 140 Q 470 130 500 100 Z" fill="#ffffff" opacity="0.7"/>
+    <path d="M 750 180 Q 770 150 800 180 Q 830 170 850 190 L 750 220 Q 720 210 750 180 Z" fill="#ffffff" opacity="0.6"/>
+  </g>
+
+  <!-- Mountains (Parallax Layer 2: Slow) -->
+  <g id="mountains" transform="translate(0, 150) scale(1.2)">
+    <path d="M -50 450 L 150 200 L 350 450 Z" fill="#9CA3AF"/>
+    <path d="M 150 200 L 200 260 L 100 300 Z" fill="#E5E7EB"/> <!-- Snow peak -->
+    
+    <path d="M 200 500 L 450 150 L 700 500 Z" fill="#6B7280"/>
+    <path d="M 450 150 L 520 250 L 380 300 Z" fill="#F3F4F6"/> <!-- Snow peak -->
+    
+    <path d="M 550 450 L 700 250 L 850 450 Z" fill="#9CA3AF"/>
+  </g>
+
+  <!-- Back Hills (Parallax Layer 3: Medium) -->
+  <g id="hills_back">
+    <!-- Lowered and flattened out slightly -->
+    <path d="M -100 600 L -100 350 Q 350 200 900 450 L 900 600 Z" fill="#4ADE80"/>
+  </g>
+
+  <!-- Back Trees -->
+  <g id="trees_back" transform="translate(0, 50) scale(1.5)">
+    <g transform="translate(180, 210)">
+      <rect x="-4" y="0" width="8" height="25" fill="#78350F"/>
+      <circle cx="0" cy="-15" r="20" fill="#166534"/>
+      <circle cx="-10" cy="-5" r="15" fill="#14532D"/>
+      <circle cx="10" cy="-5" r="15" fill="#14532D"/>
+    </g>
+    <g transform="translate(450, 270)">
+      <rect x="-4" y="0" width="8" height="25" fill="#78350F"/>
+      <circle cx="0" cy="-15" r="20" fill="#166534"/>
+    </g>
+  </g>
+
+  <!-- Front Hills (Parallax Layer 4: Fast) -->
+  <g id="hills_front">
+    <!-- Huge sloping foreground rolling hill -> provides perfect stage space for big unicorn -->
+    <path d="M -100 600 L -100 450 Q 400 400 1000 650 L 900 600 Z" fill="#22C55E"/>
+  </g>
+
+  <!-- Front Trees -->
+  <g id="trees_front" transform="translate(0, 0) scale(2.2)">
+    <!-- Shifted right/left to frame the center for the unicorn -->
+    <g transform="translate(30, 220)">
+       <rect x="-6" y="0" width="12" height="35" fill="#78350F"/>
+       <path d="M 0 -45 L 30 5 L -30 5 Z" fill="#15803D"/>
+       <path d="M 0 -25 L 25 15 L -25 15 Z" fill="#16A34A"/>
+    </g>
+    <g transform="translate(340, 260)">
+       <rect x="-8" y="0" width="16" height="40" fill="#78350F"/>
+       <path d="M 0 -50 L 35 10 L -35 10 Z" fill="#15803D"/>
+       <path d="M 0 -25 L 30 20 L -30 20 Z" fill="#16A34A"/>
+    </g>
+  </g>
+</svg>

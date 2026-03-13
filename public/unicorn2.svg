@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff9a9e"/>
+      <stop offset="20%" stop-color="#fecfef"/>
+      <stop offset="40%" stop-color="#fbc2eb"/>
+      <stop offset="60%" stop-color="#a18cd1"/>
+      <stop offset="80%" stop-color="#84fab0"/>
+      <stop offset="100%" stop-color="#8fd3f4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hintere Beine -->
+  <g id="leg_back_2">
+    <rect x="75" y="120" width="14" height="40" rx="7" fill="#f0f0f0" stroke="#333" stroke-width="2.5"/>
+  </g>
+  <g id="leg_front_2">
+    <rect x="115" y="120" width="14" height="40" rx="7" fill="#f0f0f0" stroke="#333" stroke-width="2.5"/>
+  </g>
+
+  <!-- Schwanz -->
+  <g id="tail">
+    <path d="M 50 110 Q 20 80 30 140 Q 45 150 55 120 Z" fill="url(#rainbow)" stroke="#333" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Körper -->
+  <g id="body">
+    <ellipse cx="95" cy="110" rx="45" ry="35" fill="#ffffff" stroke="#333" stroke-width="2.5"/>
+  </g>
+
+  <!-- Vordere Beine -->
+  <g id="leg_back_1">
+    <rect x="65" y="125" width="14" height="40" rx="7" fill="#ffffff" stroke="#333" stroke-width="2.5"/>
+  </g>
+  <g id="leg_front_1">
+    <rect x="105" y="125" width="14" height="40" rx="7" fill="#ffffff" stroke="#333" stroke-width="2.5"/>
+  </g>
+
+  <!-- Mähne -->
+  <g id="mane">
+    <path d="M 115 50 Q 95 65 110 100 Q 130 65 115 50 Z" fill="url(#rainbow)" stroke="#333" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Horn -->
+  <g id="horn">
+    <path d="M 130 55 L 140 10 L 145 50 Z" fill="#ffdf00" stroke="#333" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Kopf -->
+  <g id="head">
+    <path d="M 110 90 Q 105 50 135 45 Q 165 40 165 75 Q 165 95 130 100 Q 110 100 110 90 Z" fill="#ffffff" stroke="#333" stroke-width="2.5" stroke-linejoin="round"/>
+    
+    <!-- Auge -->
+    <g id="eye">
+      <circle cx="135" cy="65" r="6" fill="#000"/>
+      <circle cx="137" cy="63" r="2" fill="#fff"/>
+    </g>
+    
+    <!-- Mund -->
+    <g id="mouth">
+      <path d="M 152 80 Q 156 85 160 80" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>
