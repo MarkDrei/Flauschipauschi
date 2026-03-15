@@ -4,13 +4,13 @@ A game built with Next.js 15, TypeScript, React, and HTML5 Canvas.
 
 ## Technology Stack
 
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 15 (App Router with static export)
 - **Language**: TypeScript (ES Modules)
 - **Frontend**: React + HTML5 Canvas
 - **Styling**: Tailwind CSS + custom CSS
 - **Testing**: Vitest (with jsdom)
-- **Authentication**: iron-session (HTTP-only cookies)
 - **Rendering**: Custom Canvas renderers
+- **Deployment**: Static site (no Node.js required)
 
 ## Project Structure
 
@@ -50,12 +50,50 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the game.
 
-### Build
+### Build for Production
 
 ```bash
 npm run build
-npm start
 ```
+
+The compiled output is generated in the `out/` folder as a static site (no Node.js runtime required).
+
+### Deployment
+
+**This app is built for traditional web hosting** (PHP hosting, static file hosting, etc.) — it requires **no Node.js server**.
+
+#### Upload to Traditional Hosting
+
+1. Run `npm run build` to generate the `out/` folder
+2. Upload the **entire contents of `out/`** to your web host
+3. Access the app via your domain
+
+**Important**: Upload the files to the root of where you want the app to be accessed:
+- If you want it at `https://example.com/` → upload to web root
+- If you want it at `https://example.com/games/flauschipauschi/` → upload to that subdirectory
+
+#### Build for a Subdirectory
+
+If your app will be in a subdirectory (not the root), set the path before building:
+
+```bash
+export MSYS_NO_PATHCONV=1
+export NEXT_PUBLIC_BASE_PATH="/path/to/flauschipauschi"
+npm run build
+```
+
+Then upload the `out/` folder contents to that path on your server.
+
+#### Test Locally
+
+To test the production build locally:
+
+```bash
+npm run build
+npx http-server out/ -p 3000
+```
+
+Then open `http://localhost:3000` in your browser.
 
 ### Testing
 
@@ -78,10 +116,10 @@ No canvas or JavaScript is needed for this view — it is a pure server componen
 - **ES Modules**: Modern JavaScript module system
 - **Canvas Rendering**: HTML5 Canvas for game views
 - **Game Engine**: Custom game engine with update/render loops
-- **API Routes**: Next.js API routes for backend functionality
-- **Sessions**: iron-session for secure HTTP-only cookies
+- **Static Export**: Compiled to pure HTML/CSS/JavaScript (no server needed)
 - **Testing**: Vitest with jsdom for unit and integration tests
 - **Styling**: Tailwind CSS with custom global styles
+- **Traditional Hosting Ready**: Deploy to any web host (PHP hosting, static file hosting, etc.)
 
 ## Development Guidelines
 

@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Flauschipauschi",
   description: "A game built with Next.js and Canvas",
+  icons: {
+    icon: "/unicorn2.svg",
+  },
 };
 
 export default function RootLayout({

@@ -124,7 +124,7 @@ export class GameEngine {
   private loadUnicornImage(): void {
     if (typeof window === "undefined") return;
     const img = new Image();
-    img.src = "/unicorn.svg";
+    img.src = "/unicorn2.svg";
     this.unicornImage = img;
   }
 
