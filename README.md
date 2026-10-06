@@ -130,10 +130,13 @@ export default function GameComponent() {
 }
 ```
 
+## Deployment
+
+Pushes to `main` are deployed to https://flauschipauschi.ironstrike.de via the VPS webhook (https://github.com/MarkDrei/vpsIonos). Other branches become preview deployments. The platform builds the `Dockerfile` (Next.js standalone output) and runs the container on port 3000 behind Traefik.
+
 ## Notes
 
 - Database support (PostgreSQL) is planned but not yet implemented
-- Container/Docker configuration is planned but not yet implemented
 - Future: Deadlock-proof typed lock system for concurrency
 - Future: In-memory cache with persistence
 
