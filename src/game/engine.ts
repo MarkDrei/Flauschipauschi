@@ -651,7 +651,10 @@ export class GameEngine {
       this.unicornImage.complete &&
       this.unicornImage.naturalWidth > 0
     ) {
-      ctx.drawImage(this.unicornImage, -size, -size, size * 2, size * 2);
+      // Keep the sprite's aspect ratio (unicorn.svg is 520×350, not square)
+      const img = this.unicornImage;
+      const h = (size * 2 * img.naturalHeight) / img.naturalWidth;
+      ctx.drawImage(img, -size, -h / 2, size * 2, h);
     } else {
       this.drawFallbackUnicorn(ctx, size);
     }
