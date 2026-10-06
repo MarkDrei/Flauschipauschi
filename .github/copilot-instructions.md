@@ -34,7 +34,7 @@ npm run lint       # ESLint check (catches unused vars/types)
 
 | Directory | Purpose |
 |-----------|---------|
-| `public/` | Static SVG assets served at root URL (`/background.svg`, `/unicorn.svg`, `/unicorn2.svg`) |
+| `public/` | Static SVG assets served at root URL (`/background.svg`, `/unicorn.svg`) |
 | `src/app/` | Next.js App Router pages & API routes |
 | `src/app/api/` | Server-side API endpoints |
 | `src/components/` | React components (client/server) |
@@ -49,15 +49,11 @@ npm run lint       # ESLint check (catches unused vars/types)
 | File | Description |
 |------|-------------|
 | `public/background.svg` | Sky/landscape background, `viewBox="0 0 800 600"` |
-| `public/unicorn.svg` | Unicorn sprite variant 1 |
-| `public/unicorn2.svg` | Unicorn sprite variant 2 (`viewBox="0 0 200 200"`), shown on home page |
+| `public/unicorn.svg` | Unicorn sprite (`viewBox="0 0 520 350"`), drawn by the game engine. Built from nested named `<g id>` parts (`body` ⊃ tail, 4 legs, `head` ⊃ mane, horn, forelock, eye, cheek, mouth); each carries `data-pivot="x y"`. Animated per part by `src/game/unicornRig.ts` (layer split + transforms) and `src/game/unicornPose.ts` (pure `stepMotion`/`computePose`) |
 
 ### Home Page (`src/app/page.tsx`)
 
-Server component (no `"use client"`) that renders a fullscreen scene:
-- `background.svg` fills the entire viewport (`absolute inset-0 w-full h-full object-cover`).
-- `unicorn2.svg` is centered on top of the background at `256×256 px` (`absolute inset-0 m-auto w-64 h-64`).
-- No canvas or JavaScript is used for this view.
+Renders the fullscreen `GameCanvas` component; the game engine (`src/game/engine.ts`) loads `/unicorn.svg` as the player sprite.
 
 ### Key Files
 

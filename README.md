@@ -17,13 +17,12 @@ A game built with Next.js 15, TypeScript, React, and HTML5 Canvas.
 ```
 public/                     # Static assets served at root URL
 ├── background.svg          # Fullscreen sky/landscape background
-├── unicorn.svg             # Unicorn sprite (variant 1)
-└── unicorn2.svg            # Unicorn sprite (variant 2, displayed on home page)
+└── unicorn.svg             # Unicorn sprite (named parts with data-pivot for animation)
 src/
 ├── app/                    # Next.js App Router pages and API routes
 │   ├── api/               # API routes
 │   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Home page – fullscreen background + unicorn2
+│   └── page.tsx           # Home page – fullscreen game canvas
 ├── components/            # React components
 ├── game/                  # Game engine and logic
 ├── renderers/            # Canvas rendering utilities
@@ -66,11 +65,24 @@ npm run test:ui  # Run tests with UI
 
 ## Home Page
 
-`src/app/page.tsx` renders a fullscreen scene:
-- `public/background.svg` is stretched to cover the entire viewport as a background layer.
-- `public/unicorn2.svg` is centered on top of the background at `256×256 px`.
+`src/app/page.tsx` renders the fullscreen `GameCanvas` component. The game engine (`src/game/engine.ts`) loads `public/unicorn.svg` as the player sprite.
 
-No canvas or JavaScript is needed for this view — it is a pure server component using `<img>` tags and Tailwind CSS (`absolute`, `inset-0`, `object-cover`).
+### Unicorn rig & animation
+
+The unicorn SVG (`viewBox="0 0 520 350"`) is built from named, nested parts; nesting is the hierarchy (a child moves with its parent):
+
+```
+body
+├── tail
+├── leg_back_left, leg_front_left, leg_back_right, leg_front_right
+└── head
+    ├── mane, horn, forelock, eye, cheek, mouth
+```
+
+Every part has a `data-pivot="x y"` at its joint.
+
+- `src/game/unicornRig.ts` splits the SVG into per-part layers (in paint order) at load time. The engine rasterises each layer once into an offscreen canvas and per frame draws them with canvas transforms around their pivots.
+- `src/game/unicornPose.ts` is pure and unit-tested. `stepMotion()` integrates the smoothed speed, trot phase and damped springs, and `computePose()` maps that state to `{ angle, dx, dy, scaleY }` per part. While moving it produces a speed-dependent trot with trailing legs, a tail and mane that drag behind, a head bob and a body bounce. When idle it produces breathing, blinks and tail flicks. The sprite is mirrored when moving left.
 
 ## Key Features
 

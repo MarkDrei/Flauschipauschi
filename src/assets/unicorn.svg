@@ -1,124 +1,128 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 350" width="520" height="350">
   <defs>
-    <radialGradient id="bodyGrad" cx="50%" cy="40%" r="60%">
+    <radialGradient id="coat" cx="45%" cy="35%" r="70%">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#ecdeff"/>
+      <stop offset="70%" stop-color="#fbf3ff"/>
+      <stop offset="100%" stop-color="#eedcff"/>
     </radialGradient>
-    <linearGradient id="hornGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#e8b830"/>
-      <stop offset="100%" stop-color="#fff8b0"/>
+    <linearGradient id="legFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e6d3fb"/>
+      <stop offset="100%" stop-color="#dcc6f7"/>
+    </linearGradient>
+    <linearGradient id="legNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbf4ff"/>
+      <stop offset="100%" stop-color="#f1e4ff"/>
+    </linearGradient>
+    <linearGradient id="hornGrad" x1="0" y1="1" x2="0.4" y2="0">
+      <stop offset="0%" stop-color="#f4b93a"/>
+      <stop offset="100%" stop-color="#fff2a8"/>
+    </linearGradient>
+    <linearGradient id="hoof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d7b8f5"/>
+      <stop offset="100%" stop-color="#b693e6"/>
     </linearGradient>
   </defs>
 
-  <!-- TAIL (drawn first — behind body) -->
-  <g id="tail">
-    <path d="M 82 193 C 52 177, 24 152, 30 118 C 36 84, 62 92, 57 118 C 52 144, 28 154, 37 187"
-          fill="none" stroke="#ff6b9d" stroke-width="8" stroke-linecap="round"/>
-    <path d="M 82 199 C 50 185, 20 158, 26 124 C 32 90, 58 99, 53 124 C 48 150, 26 160, 35 193"
-          fill="none" stroke="#ff9b4e" stroke-width="7" stroke-linecap="round"/>
-    <path d="M 82 205 C 53 193, 27 167, 33 134 C 39 101, 62 109, 58 133 C 54 157, 34 167, 42 198"
-          fill="none" stroke="#ffe566" stroke-width="6" stroke-linecap="round"/>
-    <path d="M 82 211 C 57 201, 34 175, 40 143 C 46 111, 65 118, 62 141 C 59 164, 41 173, 49 203"
-          fill="none" stroke="#66d9a0" stroke-width="5" stroke-linecap="round"/>
-    <path d="M 82 217 C 62 209, 42 183, 48 152 C 54 121, 68 128, 66 150 C 64 172, 48 179, 55 208"
-          fill="none" stroke="#66b2ff" stroke-width="4" stroke-linecap="round"/>
-    <path d="M 82 222 C 66 217, 50 191, 56 161 C 62 131, 72 137, 70 158 C 68 179, 53 185, 60 213"
-          fill="none" stroke="#cc88ff" stroke-width="3" stroke-linecap="round"/>
-  </g>
+  <!-- body is the root part: every other part hangs off it (nesting = hierarchy) -->
+  <g id="body" data-pivot="215 215">
+    <g id="tail" data-pivot="126 190">
+      <path d="M 150 200 L 130 196 C 100 200, 80 230, 92 262 C 98 276, 114 276, 118 266 C 106 262, 104 246, 112 236 C 120 224, 128 214, 132 206 Z" fill="#c3a3ff" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M 148 196 L 128 192 C 96 186, 66 206, 66 238 C 66 254, 80 260, 88 252 C 80 244, 82 228, 94 220 C 106 212, 120 206, 130 202 Z" fill="#8fd0ff" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M 146 190 L 126 186 C 94 170, 56 182, 48 212 C 44 228, 56 238, 66 232 C 60 222, 66 206, 80 200 C 96 194, 114 194, 128 196 Z" fill="#9be3b5" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M 146 184 L 126 180 C 100 156, 62 152, 44 176 C 36 188, 42 202, 54 200 C 52 188, 62 176, 78 176 C 96 176, 112 182, 128 190 Z" fill="#ffe680" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M 148 180 L 128 176 C 112 148, 82 132, 58 144 C 46 150, 46 164, 58 166 C 62 154, 76 150, 90 156 C 106 162, 118 172, 130 186 Z" fill="#ffc48a" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M 152 178 L 132 174 C 126 146, 106 124, 82 124 C 70 124, 66 136, 74 142 C 82 134, 96 136, 106 148 C 116 158, 122 170, 130 184 Z" fill="#ff9ec7" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+    </g>
 
-  <!-- BACK LEGS -->
-  <g id="leg_back">
-    <!-- near back leg -->
-    <path d="M 120 262 C 118 282, 116 302, 114 323 L 128 323 C 130 302, 132 282, 134 262 Z"
-          fill="#f0e4ff" stroke="#c070d8" stroke-width="2"/>
-    <ellipse cx="121" cy="326" rx="11" ry="5.5" fill="#d090e0" stroke="#a050c0" stroke-width="1.5"/>
-    <!-- far back leg -->
-    <path d="M 144 258 C 142 278, 140 298, 138 319 L 150 319 C 152 298, 154 278, 156 258 Z"
-          fill="#e8d8ff" stroke="#c070d8" stroke-width="1.5" opacity="0.6"/>
-    <ellipse cx="144" cy="322" rx="10" ry="5" fill="#d090e0" stroke="#a050c0" stroke-width="1.5" opacity="0.6"/>
-  </g>
+    <!-- far-side legs (left), behind body -->
+    <g id="leg_back_left" data-pivot="146 228">
+      <path d="M 128.0 228 A 18.0 18.0 0 0 1 164.0 228 C 164.0 264, 162.0 286, 162.0 300 L 130.0 300 C 130.0 286, 128.0 264, 128.0 228 Z" fill="url(#legFar)" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 129.0 296 L 163.0 296 C 166.0 308, 165.0 314, 156.0 314 L 136.0 314 C 127.0 314, 126.0 308, 129.0 296 Z" fill="url(#hoof)" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 134.0 302 Q 138.0 309 144.0 309" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+    </g>
+    <g id="leg_front_left" data-pivot="272 228">
+      <path d="M 254.0 228 A 18.0 18.0 0 0 1 290.0 228 C 290.0 264, 288.0 286, 288.0 300 L 256.0 300 C 256.0 286, 254.0 264, 254.0 228 Z" fill="url(#legFar)" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 255.0 296 L 289.0 296 C 292.0 308, 291.0 314, 282.0 314 L 262.0 314 C 253.0 314, 252.0 308, 255.0 296 Z" fill="url(#hoof)" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 260.0 302 Q 264.0 309 270.0 309" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+    </g>
+    <!-- near-side legs (right), behind body so the hips stay hidden when they swing -->
+    <g id="leg_back_right" data-pivot="174 234">
+      <path d="M 154.0 234 A 20.0 20.0 0 0 1 194.0 234 C 194.0 270, 192.0 296, 192.0 310 L 156.0 310 C 156.0 296, 154.0 270, 154.0 234 Z" fill="url(#legNear)" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 155.0 306 L 193.0 306 C 196.0 318, 195.0 324, 186.0 324 L 162.0 324 C 153.0 324, 152.0 318, 155.0 306 Z" fill="url(#hoof)" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 160.0 312 Q 164.0 319 170.0 319" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+    </g>
+    <g id="leg_front_right" data-pivot="298 234">
+      <path d="M 278.0 234 A 20.0 20.0 0 0 1 318.0 234 C 318.0 270, 316.0 296, 316.0 310 L 280.0 310 C 280.0 296, 278.0 270, 278.0 234 Z" fill="url(#legNear)" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 279.0 306 L 317.0 306 C 320.0 318, 319.0 324, 310.0 324 L 286.0 324 C 277.0 324, 276.0 318, 279.0 306 Z" fill="url(#hoof)" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 284.0 312 Q 288.0 319 294.0 319" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+    </g>
 
-  <!-- BODY -->
-  <g id="body">
-    <ellipse cx="210" cy="210" rx="130" ry="70" fill="url(#bodyGrad)" stroke="#c070d8" stroke-width="2.5"/>
-  </g>
+  <!-- body artwork -->
+    <path d="M 124 205 C 116 165, 155 148, 205 150 C 245 152, 272 150, 296 136 C 310 116, 330 100, 356 100 L 384 150 C 376 182, 364 204, 356 222 C 348 250, 330 264, 298 268 C 258 276, 186 278, 152 266 C 128 256, 126 232, 124 205 Z" fill="url(#coat)" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M 160 168 C 190 158, 240 160, 270 164" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.9"/>
+    <!-- belly shade -->
+    <path d="M 165 255 C 205 266, 262 266, 305 252" fill="none" stroke="#ead9fb" stroke-width="7" stroke-linecap="round"/>
+    <!-- cutie mark: little star + sparkles -->
+    <path d="M 180 192 L 185.3 203.2 L 197.6 204.6 L 188.5 213 L 191 225.1 L 180 219 L 169 225.1 L 171.5 213 L 162.4 204.6 L 174.7 203.2 Z" fill="#ffe680" stroke="#f0b93c" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 206 192 l 2 5 l 5 2 l -5 2 l -2 5 l -2 -5 l -5 -2 l 5 -2 Z" fill="#ff9ec7"/>
+    <path d="M 160 224 l 1.5 4 l 4 1.5 l -4 1.5 l -1.5 4 l -1.5 -4 l -4 -1.5 l 4 -1.5 Z" fill="#8fd0ff"/>
 
-  <!-- FRONT LEGS -->
-  <g id="leg_front">
-    <!-- near front leg -->
-    <path d="M 286 264 C 284 284, 282 304, 280 325 L 294 325 C 296 304, 298 284, 300 264 Z"
-          fill="#f0e4ff" stroke="#c070d8" stroke-width="2"/>
-    <ellipse cx="287" cy="328" rx="11" ry="5.5" fill="#d090e0" stroke="#a050c0" stroke-width="1.5"/>
-    <!-- far front leg -->
-    <path d="M 308 260 C 306 280, 304 300, 302 321 L 314 321 C 316 300, 318 280, 320 260 Z"
-          fill="#e8d8ff" stroke="#c070d8" stroke-width="1.5" opacity="0.6"/>
-    <ellipse cx="308" cy="324" rx="10" ry="5" fill="#d090e0" stroke="#a050c0" stroke-width="1.5" opacity="0.6"/>
-  </g>
+    <g id="head" data-pivot="338 175">
+      <g id="mane" data-pivot="345 62">
+        <path d="M 330 150 C 298 156, 280 180, 290 210 C 294 224, 308 228, 314 222 C 304 214, 306 200, 316 194 C 326 186, 334 178, 340 168 L 372 120 Z" fill="#c3a3ff"/>
+        <path d="M 330 150 C 298 156, 280 180, 290 210 C 294 224, 308 228, 314 222 C 304 214, 306 200, 316 194" fill="none" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M 338 126 C 300 124, 272 146, 280 176 C 284 192, 300 196, 308 190 C 298 182, 300 168, 312 164 C 324 160, 334 156, 342 150 L 372 120 Z" fill="#8fd0ff"/>
+        <path d="M 338 126 C 300 124, 272 146, 280 176 C 284 192, 300 196, 308 190 C 298 182, 300 168, 312 164" fill="none" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M 344 104 C 304 96, 272 116, 276 146 C 280 162, 296 166, 304 160 C 294 152, 296 138, 308 134 C 322 130, 334 128, 344 124 L 372 120 Z" fill="#9be3b5"/>
+        <path d="M 344 104 C 304 96, 272 116, 276 146 C 280 162, 296 166, 304 160 C 294 152, 296 138, 308 134" fill="none" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M 348 82 C 312 72, 280 88, 280 116 C 282 132, 298 136, 306 130 C 296 122, 298 108, 310 104 C 324 100, 336 100, 346 98 L 372 120 Z" fill="#ffe680"/>
+        <path d="M 348 82 C 312 72, 280 88, 280 116 C 282 132, 298 136, 306 130 C 296 122, 298 108, 310 104" fill="none" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M 352 60 C 322 48, 292 60, 290 86 C 290 102, 304 108, 312 102 C 304 94, 306 82, 318 78 C 330 74, 342 76, 350 76 L 372 120 Z" fill="#ffc48a"/>
+        <path d="M 352 60 C 322 48, 292 60, 290 86 C 290 102, 304 108, 312 102 C 304 94, 306 82, 318 78" fill="none" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M 360 50 C 340 34, 310 36, 302 56 C 298 70, 310 78, 318 74 C 314 64, 322 56, 334 56 C 344 56, 352 60, 358 64 L 372 120 Z" fill="#ff9ec7"/>
+        <path d="M 360 50 C 340 34, 310 36, 302 56 C 298 70, 310 78, 318 74 C 314 64, 322 56, 334 56" fill="none" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      </g>
+      <!-- far ear -->
+      <path d="M 352 66 L 352 24 C 362 32, 372 48, 372 62 Z" fill="#eedcff" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <!-- head + muzzle -->
+      <circle cx="370" cy="118" r="66" fill="url(#coat)" stroke="#a98bd1" stroke-width="4"/>
+      <ellipse cx="428" cy="150" rx="40" ry="32" fill="#fbf3ff" stroke="#a98bd1" stroke-width="4"/>
+      <circle cx="370" cy="118" r="64.3" fill="url(#coat)"/>
+      <ellipse cx="428" cy="150" rx="38.3" ry="30.3" fill="#fbf3ff"/>
+      <path d="M 322 112 C 324 96, 332 86, 342 80" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
+      <!-- nostril -->
+      <ellipse cx="452" cy="144" rx="4" ry="3" fill="#c9a6ee"/>
+      <!-- near ear -->
+      <path d="M 328 70 L 318 26 C 334 30, 348 46, 352 62 Z" fill="#fbf3ff" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 331 64 L 325 38 C 334 42, 342 52, 345 61 Z" fill="#ffc6de"/>
 
-  <!-- HEAD (neck + head shape + muzzle + ear) -->
-  <g id="head">
-    <!-- neck -->
-    <path d="M 290 178 C 310 148, 330 120, 348 108
-             L 368 110 C 366 128, 358 150, 346 168
-             C 330 177, 312 181, 290 178 Z"
-          fill="url(#bodyGrad)" stroke="#c070d8" stroke-width="2.5"/>
-    <!-- head oval -->
-    <ellipse cx="378" cy="148" rx="50" ry="43" fill="url(#bodyGrad)" stroke="#c070d8" stroke-width="2.5"/>
-    <!-- muzzle -->
-    <ellipse cx="416" cy="163" rx="25" ry="18" fill="#f8f0ff" stroke="#c070d8" stroke-width="2"/>
-    <!-- nostril -->
-    <ellipse cx="422" cy="168" rx="4.5" ry="3.2" fill="#dfc0f8"/>
-    <!-- ear outer -->
-    <path d="M 352 110 L 344 80 L 368 103 Z" fill="#f0e4ff" stroke="#c070d8" stroke-width="2" stroke-linejoin="round"/>
-    <!-- ear inner (pink) -->
-    <path d="M 352 108 L 348 85 L 365 103 Z" fill="#ffccee"/>
-  </g>
+      <g id="horn" data-pivot="384 56">
+        <path d="M 370 60 L 397 10 L 400 58 Q 385 66 370 60 Z" fill="url(#hornGrad)" stroke="#d39a1f" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M 375 47 Q 388 50 399 44 M 381 33 Q 391 35 399 30 M 387 22 Q 393 23 397.5 19" fill="none" stroke="#e0a82a" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
 
-  <!-- HORN -->
-  <g id="horn">
-    <path d="M 348 108 L 330 52 L 368 101 Z" fill="url(#hornGrad)" stroke="#bf9018" stroke-width="1.5" stroke-linejoin="round"/>
-    <!-- spiral stripe lines -->
-    <path d="M 334 88 Q 350 81 362 88" fill="none" stroke="#bf9018" stroke-width="1.2" opacity="0.6"/>
-    <path d="M 333 70 Q 347 63 358 70" fill="none" stroke="#bf9018" stroke-width="1.2" opacity="0.6"/>
-    <path d="M 332 54 Q 344 48 352 54" fill="none" stroke="#bf9018" stroke-width="1.2" opacity="0.6"/>
-  </g>
+      <g id="forelock" data-pivot="356 64">
+        <path d="M 330 66 C 340 50, 366 52, 378 70 C 384 80, 382 92, 376 98 C 372 88, 364 82, 352 80 C 344 79, 337 80, 332 84 C 327 78, 327 71, 330 66 Z" fill="#ffc48a" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M 340 56 C 356 38, 388 42, 398 64 C 404 78, 400 92, 392 98 C 390 86, 382 76, 370 72 C 360 68, 350 66, 342 68 C 338 64, 338 60, 340 56 Z" fill="#ff9ec7" stroke="#a98bd1" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M 358 50 C 370 47, 382 50, 389 58" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.75"/>
+      </g>
 
-  <!-- MANE (rainbow strands along neck, drawn over head) -->
-  <g id="mane">
-    <path d="M 347 107 C 328 100, 306 114, 295 133 C 284 152, 289 172, 278 191 C 267 210, 248 215, 240 228"
-          fill="none" stroke="#ff6b9d" stroke-width="9" stroke-linecap="round"/>
-    <path d="M 349 111 C 332 106, 311 121, 301 140 C 291 159, 297 178, 287 197 C 277 216, 259 221, 251 234"
-          fill="none" stroke="#ff9b4e" stroke-width="7" stroke-linecap="round"/>
-    <path d="M 350 115 C 335 111, 316 125, 307 144 C 298 163, 304 181, 295 199"
-          fill="none" stroke="#ffe566" stroke-width="5.5" stroke-linecap="round"/>
-    <path d="M 350 119 C 337 116, 320 129, 312 148 C 304 167, 310 184, 302 202"
-          fill="none" stroke="#66d9a0" stroke-width="4.5" stroke-linecap="round"/>
-    <path d="M 350 123 C 339 120, 323 133, 316 152 C 309 171, 315 187, 307 205"
-          fill="none" stroke="#66b2ff" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M 350 127 C 341 124, 326 136, 319 155 C 312 174, 318 189, 310 207"
-          fill="none" stroke="#cc88ff" stroke-width="2.5" stroke-linecap="round"/>
-  </g>
+      <g id="eye" data-pivot="394 124">
+        <ellipse cx="394" cy="124" rx="17" ry="21" fill="#3b2a55"/>
+        <ellipse cx="394" cy="129" rx="12" ry="14" fill="#7b5cc4"/>
+        <ellipse cx="394" cy="135" rx="8" ry="6" fill="#a58ae6"/>
+        <circle cx="387" cy="115" r="7" fill="#ffffff"/>
+        <circle cx="400" cy="134" r="3.2" fill="#ffffff"/>
+        <path d="M 378 112 Q 372 108 367 109 M 379 106 Q 375 99 370 98" fill="none" stroke="#3b2a55" stroke-width="3" stroke-linecap="round"/>
+      </g>
 
-  <!-- EYE LEFT (near eye — large and cute) -->
-  <g id="eye_left">
-    <!-- sclera -->
-    <ellipse cx="392" cy="135" rx="13" ry="15" fill="white" stroke="#33224a" stroke-width="2"/>
-    <!-- iris + pupil -->
-    <ellipse cx="394" cy="137" rx="8" ry="10" fill="#553366"/>
-    <!-- highlight -->
-    <circle cx="397" cy="132" r="3.5" fill="white"/>
-    <!-- eyelash / brow -->
-    <path d="M 381 123 C 386 118, 397 117, 406 120" fill="none" stroke="#33224a" stroke-width="2.2" stroke-linecap="round"/>
-  </g>
+      <g id="cheek" data-pivot="402 156">
+        <ellipse cx="402" cy="156" rx="13" ry="8" fill="#ffadd0" opacity="0.7"/>
+      </g>
 
-  <!-- EYE RIGHT (far eye — faintly visible) -->
-  <g id="eye_right">
-    <ellipse cx="374" cy="137" rx="9" ry="10" fill="white" stroke="#33224a" stroke-width="1.5" opacity="0.4"/>
-    <ellipse cx="375" cy="138" rx="5" ry="6" fill="#553366" opacity="0.4"/>
-  </g>
-
-  <!-- MOUTH (friendly smile) -->
-  <g id="mouth">
-    <path d="M 409 170 C 413 176, 420 177, 424 173" fill="none" stroke="#9966aa" stroke-width="2.2" stroke-linecap="round"/>
+      <g id="mouth" data-pivot="440 166">
+        <path d="M 430 164 Q 440 174 452 164" fill="none" stroke="#8a64b8" stroke-width="3" stroke-linecap="round"/>
+      </g>
+    </g>
   </g>
 </svg>
