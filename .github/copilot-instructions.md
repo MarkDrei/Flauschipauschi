@@ -49,7 +49,7 @@ npm run lint       # ESLint check (catches unused vars/types)
 | File | Description |
 |------|-------------|
 | `public/background.svg` | Sky/landscape background, `viewBox="0 0 800 600"` |
-| `public/unicorn.svg` | Unicorn sprite (`viewBox="0 0 520 350"`), drawn by the game engine. Built from named `<g id>` parts (body, head, horn, mane, forelock, tail, leg_front_left/right, leg_back_left/right, eye, cheek, mouth); movable parts carry `data-pivot="x y"` for rotation |
+| `public/unicorn.svg` | Unicorn sprite (`viewBox="0 0 520 350"`), drawn by the game engine. Built from nested named `<g id>` parts (`body` ⊃ tail, 4 legs, `head` ⊃ mane, horn, forelock, eye, cheek, mouth); each carries `data-pivot="x y"`. Animated per part by `src/game/unicornRig.ts` (layer split + transforms) and `src/game/unicornPose.ts` (pure `stepMotion`/`computePose`) |
 
 ### Home Page (`src/app/page.tsx`)
 

@@ -2,6 +2,18 @@
 // Manages game state, updates, and rendering loop
 
 import type { GameState } from "@/shared/types";
+import {
+  computePose,
+  initialMotion,
+  stepMotion,
+  type MotionState,
+} from "@/game/unicornPose";
+import {
+  buildRig,
+  layerMatrices,
+  layerSvg,
+  type Rig,
+} from "@/game/unicornRig";
 
 type CollectibleType = "star" | "heart" | "crystal";
 
@@ -62,7 +74,12 @@ interface UnicornState {
   y: number;
   targetX: number;
   targetY: number;
-  rotation: number;
+}
+
+/** Pre-rasterised per-part layers of /unicorn.svg (see unicornRig.ts). */
+interface UnicornSprite {
+  rig: Rig;
+  layers: HTMLCanvasElement[];
 }
 
 const COLLECTIBLE_COLORS: Record<CollectibleType, string[]> = {
@@ -77,6 +94,9 @@ const PARTICLE_COLORS: Record<CollectibleType, string[]> = {
   crystal: ["#A78BFA", "#8B5CF6", "#C4B5FD", "#FFFFFF"],
 };
 
+/** Half the on-screen width of the unicorn sprite in px. */
+const UNICORN_SIZE = 52;
+
 export class GameEngine {
   private canvas: HTMLCanvasElement | null = null;
   private ctx: CanvasRenderingContext2D | null = null;
@@ -88,8 +108,8 @@ export class GameEngine {
     y: 300,
     targetX: 400,
     targetY: 300,
-    rotation: 0,
   };
+  private motion: MotionState = initialMotion();
 
   private collectibles: Collectible[] = [];
   private particles: Particle[] = [];
@@ -102,7 +122,7 @@ export class GameEngine {
   private comboCount: number = 0;
   private comboTimer: number = 0;
   private lastTimestamp: number = 0;
-  private unicornImage: HTMLImageElement | null = null;
+  private unicornSprite: UnicornSprite | null = null;
 
   constructor(canvasElement: HTMLCanvasElement | null) {
     this.canvas = canvasElement;
@@ -115,17 +135,58 @@ export class GameEngine {
     }
     this.initClouds();
     this.initSparkles();
-    this.loadUnicornImage();
+    this.loadUnicornSprite();
     for (let i = 0; i < 8; i++) {
       this.spawnCollectible();
     }
   }
 
-  private loadUnicornImage(): void {
-    if (typeof window === "undefined") return;
-    const img = new Image();
-    img.src = "/unicorn.svg";
-    this.unicornImage = img;
+  /**
+   * Loads /unicorn.svg, splits it into its named parts and rasterises each
+   * part once into an offscreen canvas. Per frame we only draw those canvases
+   * with transforms, which keeps the animation cheap (60 fps friendly).
+   */
+  private loadUnicornSprite(): void {
+    if (
+      typeof window === "undefined" ||
+      typeof fetch !== "function" ||
+      typeof DOMParser === "undefined"
+    )
+      return;
+    fetch("/unicorn.svg")
+      .then((res) => (res.ok ? res.text() : Promise.reject(res.status)))
+      .then(async (text) => {
+        const doc = new DOMParser().parseFromString(text, "image/svg+xml");
+        const rig = buildRig(doc.documentElement);
+        const [, , vbW, vbH] = rig.viewBox;
+        const dpr = window.devicePixelRatio || 1;
+        // ~1.5× the on-screen size so it stays crisp on HiDPI screens
+        const rasterW = Math.max(260, Math.ceil(UNICORN_SIZE * 2 * dpr * 1.5));
+        const rasterH = Math.round((rasterW * vbH) / vbW);
+        const layers = await Promise.all(
+          rig.layers.map(
+            (layer) =>
+              new Promise<HTMLCanvasElement>((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                  const c = document.createElement("canvas");
+                  c.width = rasterW;
+                  c.height = rasterH;
+                  c.getContext("2d")?.drawImage(img, 0, 0, rasterW, rasterH);
+                  resolve(c);
+                };
+                img.onerror = reject;
+                img.src =
+                  "data:image/svg+xml;charset=utf-8," +
+                  encodeURIComponent(layerSvg(rig, layer, rasterW));
+              }),
+          ),
+        );
+        this.unicornSprite = { rig, layers };
+      })
+      .catch(() => {
+        // Keep using the vector fallback unicorn.
+      });
   }
 
   private initClouds(): void {
@@ -243,12 +304,15 @@ export class GameEngine {
     const lerpSpeed = 0.1 * dt;
     const dx = this.unicorn.targetX - this.unicorn.x;
     const dy = this.unicorn.targetY - this.unicorn.y;
-    this.unicorn.x += dx * lerpSpeed;
-    this.unicorn.y += dy * lerpSpeed;
-    // Gentle tilt toward movement direction
-    const targetRotation = Math.sign(dx) * 0.05;
-    this.unicorn.rotation +=
-      (targetRotation - this.unicorn.rotation) * 0.1 * dt;
+    const stepX = dx * Math.min(lerpSpeed, 1);
+    const stepY = dy * Math.min(lerpSpeed, 1);
+    this.unicorn.x += stepX;
+    this.unicorn.y += stepY;
+    // Velocity in px per 60 fps frame drives the procedural animation.
+    const vx = dt > 0 ? stepX / dt : 0;
+    const vy = dt > 0 ? stepY / dt : 0;
+    const moving = Math.hypot(vx, vy) > 0.35;
+    this.motion = stepMotion(this.motion, { vx, vy, moving }, dt);
   }
 
   private updateCollectibles(dt: number): void {
@@ -641,21 +705,26 @@ export class GameEngine {
   }
 
   private drawUnicorn(ctx: CanvasRenderingContext2D): void {
-    const { x, y, rotation } = this.unicorn;
-    const size = 52;
+    const { x, y } = this.unicorn;
+    const size = UNICORN_SIZE;
     ctx.save();
     ctx.translate(x, y);
-    ctx.rotate(rotation * 0.4);
-    if (
-      this.unicornImage &&
-      this.unicornImage.complete &&
-      this.unicornImage.naturalWidth > 0
-    ) {
-      // Keep the sprite's aspect ratio (unicorn.svg is 520×350, not square)
-      const img = this.unicornImage;
-      const h = (size * 2 * img.naturalHeight) / img.naturalWidth;
-      ctx.drawImage(img, -size, -h / 2, size * 2, h);
+    const sprite = this.unicornSprite;
+    if (sprite) {
+      const [vbX, vbY, vbW, vbH] = sprite.rig.viewBox;
+      const k = (size * 2) / vbW;
+      // Mirror horizontally when moving left; sprite space is centred on (x, y)
+      ctx.scale(k * this.motion.facing, k);
+      ctx.translate(-vbX - vbW / 2, -vbY - vbH / 2);
+      const mats = layerMatrices(sprite.rig, computePose(this.motion));
+      sprite.layers.forEach((layer, i) => {
+        ctx.save();
+        ctx.transform(...mats[i]);
+        ctx.drawImage(layer, vbX, vbY, vbW, vbH);
+        ctx.restore();
+      });
     } else {
+      if (this.motion.facing < 0) ctx.scale(-1, 1);
       this.drawFallbackUnicorn(ctx, size);
     }
     ctx.restore();

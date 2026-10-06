@@ -65,9 +65,24 @@ npm run test:ui  # Run tests with UI
 
 ## Home Page
 
-`src/app/page.tsx` renders the fullscreen `GameCanvas` component. The game engine (`src/game/engine.ts`) loads `public/unicorn.svg` as the player sprite (aspect ratio preserved).
+`src/app/page.tsx` renders the fullscreen `GameCanvas` component. The game engine (`src/game/engine.ts`) loads `public/unicorn.svg` as the player sprite.
 
-The unicorn SVG (`viewBox="0 0 520 350"`) is built from named parts so it can be animated: `tail`, `leg_back_left`, `leg_front_left`, `leg_back_right`, `leg_front_right`, `body`, and `head` (containing `mane`, `horn`, `forelock`, `eye`, `cheek`, `mouth`). Each movable part has a `data-pivot="x y"` attribute at its joint for rotation.
+### Unicorn rig & animation
+
+The unicorn SVG (`viewBox="0 0 520 350"`) is built from named, nested parts; nesting is the hierarchy (a child moves with its parent):
+
+```
+body
+├── tail
+├── leg_back_left, leg_front_left, leg_back_right, leg_front_right
+└── head
+    ├── mane, horn, forelock, eye, cheek, mouth
+```
+
+Every part has a `data-pivot="x y"` at its joint.
+
+- `src/game/unicornRig.ts` splits the SVG into per-part layers (in paint order) at load time. The engine rasterises each layer once into an offscreen canvas and per frame draws them with canvas transforms around their pivots.
+- `src/game/unicornPose.ts` is pure and unit-tested. `stepMotion()` integrates the smoothed speed, trot phase and damped springs, and `computePose()` maps that state to `{ angle, dx, dy, scaleY }` per part. While moving it produces a speed-dependent trot with trailing legs, a tail and mane that drag behind, a head bob and a body bounce. When idle it produces breathing, blinks and tail flicks. The sprite is mirrored when moving left.
 
 ## Key Features
 
